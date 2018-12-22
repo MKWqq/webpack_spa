@@ -8,7 +8,7 @@
 npm install
 
 # install node dependencies
-cd src/server
+cd server
 npm install
 
 # serve with hot reload at localhost:8080
