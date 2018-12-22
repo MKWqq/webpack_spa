@@ -29,7 +29,7 @@ module.exports = {
       //     test: /\.(js|jsx)$/,
       //     loader: "eslint-loader",
       //     enforce: "pre",// 指定为前置类型 pre/post
-      //     include: [resolve("src")],
+      //     include: [resolve("client"),resolve("server")],
       //     options: {
       //         formatter: require("eslint-friendly-formatter")
       //     }
@@ -37,13 +37,13 @@ module.exports = {
       {
         test: /\.jsx?/,
         include: [
-          resolve('src')
+          resolve('client')
         ],
         loader: 'babel-loader'
       },
       {
         test: /\.js$/,
-        include: [resolve('src')],
+        include: [resolve('client')],
         loader: 'babel-loader'
       },
       {
@@ -75,7 +75,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      '@': path.resolve('src')
+      '@': path.resolve('client')
     }
     // modules: [
     //     path.resolve("src"),

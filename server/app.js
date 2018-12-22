@@ -20,7 +20,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.text())
 app.use(bodyParser.raw({inflate: true, limit: '10000kb', type: 'multipart/form-data'}))
 app.use(cookieParser())
-app.use('/mobile',express.static(path.join(__dirname, 'public'), {maxage: '12h'}))
+app.use(express.static(path.join(__dirname, 'public'), {maxage: '12h'}))
+// app.use('/mobile',express.static(path.join(__dirname, 'public'), {maxage: '12h'}))
 
 // 跨域
 app.all('*', function (req, res, next) {

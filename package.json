@@ -7,7 +7,7 @@
     "dev": "webpack-dev-server --mode development --hot --progress --config ./webpack/webpack.server.js",
     "build": "webpack --progress --mode production --config ./webpack/webpack.server.js",
     "start": "npm run dev",
-    "server": "node src/server/app.js",
+    "server": "node server/app.js",
     "check": "eslint --ext .js src/ --cache",
     "lint": "eslint --cache --fix src"
   },
