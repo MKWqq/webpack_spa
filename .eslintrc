@@ -1,0 +1,77 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "babel",
+    "react"
+  ],
+  "extends": [],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "commonjs": true,
+    "node": true,
+    "shared-node-browser": true
+  },
+  "globals": {
+    "__DEV__": false,
+    "__TEST__": false,
+    "__PROD__": false,
+    "__DEBUG__": false,
+    "_": false,
+    "moment": false,
+    "classnames": false
+  },
+  "rules": {
+    "strict": 0,
+    "semi": [2,"always"],
+    "comma-dangle": [2, "always"],
+    "import/extensions": ["error", "always", {
+      "js": "never"
+    }],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/jsx-indent": [
+      2,
+      2
+    ],
+    "react/jsx-indent-props": [
+      2,
+      2
+    ],
+    "react/jsx-sort-props": 0,
+    "react/no-array-index-key": 0,
+    "react/jsx-no-bind": 0,
+    "react/jsx-no-literals": 0,
+    "react/jsx-handler-names": 0,
+    "react/prop-types": 0,
+    "react/sort-comp": 0,
+    "react/jsx-child-element-spacing": 0,
+    "react/no-set-state": 0,
+    "react/require-default-props": 0,
+    "react/forbid-prop-types": 0,
+    "react/sort-prop-types": 0,
+    "react/prefer-stateless-function": 0,
+    "react/no-direct-mutation-state": 0,
+    "react/no-multi-comp": 0,
+    "react/forbid-component-props": 0,
+    "react/default-props-match-prop-types": 0,
+    "react/no-did-mount-set-state": 0,
+    "react/no-unused-prop-types": 0,
+    "react/display-name": 0,
+    "react/no-danger": 0,
+    "react/no-unused-state": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-max-depth": 0
+  }
+}

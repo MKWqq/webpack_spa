@@ -1,0 +1,16 @@
+{
+  "name": "webserver",
+  "version": "1.0.0",
+  "description": "server for web",
+  "main": "app.js",
+  "scripts": {},
+  "author": "E member",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "log4js": "^3.0.6",
+    "querystring": "^0.2.0",
+    "redis": "^2.8.0"
+  }
+}

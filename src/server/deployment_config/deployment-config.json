@@ -1,0 +1,7 @@
+{
+  "serverAddress": "http://192.168.0.242:7030",
+  "redis_ip": "192.168.0.242",
+  "redis_port": "6377",
+  "redis_password": "admin123",
+  "redis_database_no": "6"
+}

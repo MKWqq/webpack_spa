@@ -1,0 +1,47 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            "last 2 versions",
+            "android >= 4.4"
+          ]
+        },
+        "modules": false,
+        "loose": true,
+        "useBuiltIns": true
+      }
+    ],
+    "es2015",
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+//    "transform-es2015-classes",
+//    "transform-class-properties",
+//    "transform-object-rest-spread",
+//    "react-hot-loader/babel",
+//    ["transform-runtime", {
+//      "polyfill": false,
+//      "regenerator": true
+//    }],
+    [
+      "import",
+      {
+        "style": "../styles",
+        // 加载样式解析方式，（值为true时，可能是less／Sass），此处值设为相对libraryName具体模块请求路径值
+        "libraryDirectory": "",
+        // 加载包的目录，(默认是lib，即node_modules/lib/)
+        "libraryName": "antd"
+        // 加载三方组件库名，当然另外需要安装该三方库
+      }
+      // {
+      //   "style": "style/weui.min.css",
+      //   "libraryDirectory": "dist",
+      //   "libraryName": "weui"
+      // }
+    ]
+  ]
+}
