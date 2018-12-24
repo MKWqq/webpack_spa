@@ -20,3 +20,11 @@ npm run build
 # run node
 npm run server
 
+# base.conf.js文件：
+alias:{'vue': 'vue/dist/vue.js'}
+rules:[
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
+]
