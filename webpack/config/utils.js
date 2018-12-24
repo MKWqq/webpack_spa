@@ -2,7 +2,7 @@
  * utils
  * */
 var path = require('path')
-var config = require('.')
+var config = require('./index')
 var MiniCssExtractPlugin = require("mini-css-extract-plugin")
 var autoprefixer = require("autoprefixer");
 var flexbugs = require("postcss-flexbugs-fixes");
