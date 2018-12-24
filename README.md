@@ -20,3 +20,6 @@ npm run build
 # run node
 npm run server
 
+# 安装webpack对vue相关依赖模块
+npm install vue-loader vue-html-loader vue-style-loader vue-template-compiler
+
