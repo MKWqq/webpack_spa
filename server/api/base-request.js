@@ -94,7 +94,7 @@ function doRequest(req, res, successFunc, errorFunc){
   })
 
   if(req.method!=='GET'||req.method!=='DELETE'){
-    if(req.headers['content-type']==='multipart/form-data'){
+    if(req.headers['content-type'] && req.headers['content-type']==='multipart/form-data'){
       APIServerRequest.write(requestParam)
     }else{
       APIServerRequest.write(JSON.stringify(requestParam),'utf-8')
