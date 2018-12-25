@@ -51,7 +51,7 @@ function doRequest(req, res, successFunc, errorFunc){
     path:(serverAddressURL.path==='/'?'':serverAddressURL.path)+req.url,
     method:req.method,
     headers:{
-      'Content-Type':req.headers['content-type']?'application/json':req.headers['content-type'],
+      'Content-Type':req.headers['content-type']?req.headers['content-type']:'application/json',
       'X-sign': signRequest(req),
       // 新token
       'Authorization': getCurrentAuth(req)
