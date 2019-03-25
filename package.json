@@ -7,7 +7,7 @@
     "dev": "webpack-dev-server --mode development --hot --progress --config ./webpack/webpack.server.js",
     "build": "webpack --progress --mode production --config ./webpack/webpack.server.js",
     "start": "npm run dev",
-    "server": "node server/app.js",
+    "server": "cross-env NODE_ENV=local node server/app.js",
     "check": "eslint --ext .js src/ --cache",
     "lint": "eslint --cache --fix src"
   },
@@ -39,6 +39,7 @@
     "clean-webpack-plugin": "^0.1.19",
     "compression-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.2.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "cssnano": "^4.1.7",
     "eslint": "^4.19.1",

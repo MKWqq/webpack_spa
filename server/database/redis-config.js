@@ -10,7 +10,7 @@ let canEditServerConf = require('../deployment_config/deployment-config')
 
 let redisClient = redis.createClient(canEditServerConf.redis_port, canEditServerConf.redis_ip)
 
-let sessionExpire = 7200 // session过期时间设置
+// let sessionExpire = 7200 // session过期时间设置
 
 redisClient.on('error', function (e) {
   Logger.error('reidsClient出错了:' + e.message)
@@ -42,13 +42,20 @@ module.exports = {
               redisClient.del(session, function (e) {
                 if (!e) {
                   // 5. 以新的session为key存储用户信息(此处暂时存储userId，有需要再调整)
-                  redisClient.set(session, userId, function (e) {
+                  redisClient.set(userId,session, function (e) {
                     if (!e) {
-                      // 7. 为新session设置过期时间
-                      redisClient.expire(session, sessionExpire, function (e) {
+                      // 6. 以新的session为key存储用户信息(此处暂时存储userId，有需要再调整)
+                      redisClient.set(session, userId, function (e) {
                         if (!e) {
                           // 8. 返回session
                           fn(session)
+                          // 7. 为新session设置过期时间
+                          // redisClient.expire(session, sessionExpire, function (e) {
+                          //   if (!e) {
+                          //     // 8. 返回session
+                          //     fn(session)
+                          //   }
+                          // })
                         }
                       })
                     }
@@ -57,15 +64,20 @@ module.exports = {
               })
             } else {
               // 5. 以新的session为key存储用户信息(此处暂时存储userId，有需要再调整)
-              redisClient.set(session, userId, function (e) {
+              redisClient.set(userId,session, function (e) {
                 if (!e) {
-                  // 7. 为新session设置过期时间
-                  redisClient.expire(session, sessionExpire, function (e) {
-                    if (!e) {
-                      // 8. 返回session
+                  redisClient.set(session, userId, function (e) {
+                    if(!e){
                       fn(session)
                     }
                   })
+                  // 7. 为新session设置过期时间
+                  // redisClient.expire(session, sessionExpire, function (e) {
+                  //   if (!e) {
+                  //     // 8. 返回session
+                  //     fn(session)
+                  //   }
+                  // })
                 }
               })
             }

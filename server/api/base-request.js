@@ -6,8 +6,10 @@ var CanEditServerConf=require('../deployment_config/deployment-config')
 var sessionManager=require('../database/redis-config')
 var Logger = require('../config/log4js.conf')
 var APIServerConfig=require('../config/api-server.conf')
+var APIWhiteConfig=require('../config/api-white.conf')
+var HandlerCode=require('../utils/code')
+var handlerCode=new HandlerCode()
 var URL=require('url')
-var crypto = require('crypto')
 var querystring = require('querystring')
 var serverAddressURL=URL.parse(CanEditServerConf.serverAddress)
 var APIServerHttp=serverAddressURL.protocol==='http:'?require('http'):require('https')
@@ -23,18 +25,22 @@ module.exports={
    * @param errorFunc 失败回调函数
    */
   REQUEST:function(req, res, successFunc, errorFunc){
-    var userSession=req.cookies.u
-    sessionManager.verifyLoginSession(userSession,function(isLogin){
-      if(isLogin){
-        // 请求
-        doRequest(req, res, successFunc, errorFunc)
-      }else{
-        // 未登录
-        var resp_row={resp_code:1000,resp_msg:'',biz_code:'NODE_LOGIN',biz_msg:'未登录'}
-        var baseResponse=new BaseResponse(resp_row)
-        successFunc(baseResponse)
-      }
-    })
+    var userSession=req.cookies.u || ''
+    if(APIWhiteConfig.includes(req.url)){
+      sessionManager.verifyLoginSession(userSession,function(isLogin){
+        if(isLogin){
+          // 请求
+          doRequest(req, res, successFunc, errorFunc)
+        }else{
+          // 未登录
+          var resp_row={resp_code:1000,resp_msg:'',biz_code:'NODE_LOGIN',biz_msg:'未登录'}
+          var baseResponse=new BaseResponse(resp_row)
+          successFunc(baseResponse)
+        }
+      })
+    } else{
+      doRequest(req, res, successFunc, errorFunc)
+    }
   }
 }
 
@@ -52,7 +58,7 @@ function doRequest(req, res, successFunc, errorFunc){
     method:req.method,
     headers:{
       'Content-Type':req.headers['content-type']?req.headers['content-type']:'application/json',
-      'X-sign': signRequest(req),
+      'X-sign': handlerCode.signRequest(req,JSON.stringify(req.body),APIServerConfig.pramary_key),
       // 新token
       'Authorization': getCurrentAuth(req)
     }
@@ -72,7 +78,7 @@ function doRequest(req, res, successFunc, errorFunc){
         let baseResponse = new BaseResponse(resp_row)
         errorFunc({resp_info: baseResponse})
       }else{
-        var isVerifyOK = verifySign(RSPData, this.headers['x-sign'])
+        var isVerifyOK = handlerCode.verifySign(RSPData, this.headers['x-sign'],APIServerConfig.pramary_key)
         if (isVerifyOK) {
           Logger.info('请求结果[CMD:%s]--->:%s', req.url, RSPData)
           let refreshData = JSON.parse(RSPData)
@@ -102,44 +108,6 @@ function doRequest(req, res, successFunc, errorFunc){
   }
 
   APIServerRequest.end()
-}
-
-/**
- * 请求签名
- */
-function signRequest(req) {
-  let requestBodyJsonStr = JSON.stringify(req.body)
-  let MD5Hash = crypto.createHash('md5')
-  if (req.method !== 'GET' && req.method !== 'DELETE') {
-    MD5Hash.update(requestBodyJsonStr + APIServerConfig.pramary_key)
-  } else {
-    MD5Hash.update(APIServerConfig.pramary_key)
-  }
-
-  let sign = MD5Hash.digest('hex')
-  return sign
-}
-
-/**
- * 验证签名
- * @param jsonData
- * @param sign
- */
-function verifySign(jsonData, sign) {
-  if (sign) {
-    let isPass = false
-    let MD5Hash = crypto.createHash('md5')
-    let MD5Sign = MD5Hash.update(jsonData + APIServerConfig.pramary_key).digest('hex')
-
-    MD5Sign = MD5Sign.toUpperCase()
-    sign = sign.toUpperCase()
-    if (MD5Sign === sign) {
-      isPass = true
-    }
-    return isPass
-  } else {
-    return false
-  }
 }
 
 /**

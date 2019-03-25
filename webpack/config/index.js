@@ -32,10 +32,11 @@ module.exports = {
     devServer: {
       contentBase: resolve('server/public'),
       publicPath: virtualDIR,// 静态文件虚拟目录——use()
-      host: 'localhost',
-      port: '9000',
+      host: '0.0.0.0',
+      port: '7001',
       hot: true,
       inline: true,
+      clientLogLevel: "none", // 浏览器控制台信息输出控制
       open: false,
       historyApiFallback: true,
       disableHostCheck: true,
@@ -43,7 +44,7 @@ module.exports = {
       stats: { colors: true },
       proxy: {
         "/mobile/api": {
-          target: "http://localhost:7000",
+          target: "http://0.0.0.0:7000",
           changeOrigin: true,
           bypass:function(req,res){
             if(req.url==='/'){
