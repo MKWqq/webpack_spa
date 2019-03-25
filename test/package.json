@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "di": "^0.0.1",
+    "socket.io": "^2.2.0"
+  }
+}
